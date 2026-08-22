@@ -2,26 +2,23 @@ const express = require('express');
 
 const app = express();
 
-
-
-// app.use("/", (req, res)=>{
-//     res.send("hah haa");
-// })
-app.get("/user/:userId/:name/:pass", (req, res)=>{
+app.get("/user", (req, res,next)=>{
     // console.log(req.query);
-    console.log(req.params);
-    res.send({firstName: "John"});
-})
-// app.post("/user", (req, res)=>{
-//     res.send("data stored in db successfully");
-// })
-// app.delete("/user", (req, res)=>{
-//     res.send("Hello Deleted successfully");
-// })
+    // console.log(req.params);
+    next();
+    console.log("First middleware");
+    res.send("Hello from user route 1");
+},
+[(req, res, next)=>{
+    console.log("Second middleware");
+    next();
+    res.send("Hello from user route 2");
+},
+(req, res, next)=>{
+    console.log("Third middleware");
+    res.send("Hello from user route 3");
+}])
 
-// app.use("/", (req, res)=>{
-//     res.send("Hello World ffa");
-// })
 
 
 app.listen(7777, ()=>{
