@@ -4,6 +4,8 @@ const app = express();
 
 const { adminAuth,userAuth } = require("./middlewares/auth");
 
+
+
 app.use("/admin", adminAuth);
 
 app.get("/user", userAuth, (req, res) =>{
@@ -21,6 +23,10 @@ app.get("/admin/getAllData", (req, res)=>{
 app.get("/admin/deleteData", (req, res)=>{
     res.send("All Data deleted succesfully");
 });
+
+app.use("/", (err,req, res,next)=>{
+    res.status(404).send("Route not found");
+})
 
 app.listen(7777, ()=>{
     console.log('Server is running on port 7777');
