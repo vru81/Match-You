@@ -4,16 +4,24 @@ const app = express();
 
 
 
-app.use("/test", (req, res)=>{
-    res.send("Hello test");
+// app.use("/", (req, res)=>{
+//     res.send("hah haa");
+// })
+app.get("/user/:userId/:name/:pass", (req, res)=>{
+    // console.log(req.query);
+    console.log(req.params);
+    res.send({firstName: "John"});
 })
-app.use("/secretdata", (req, res)=>{
-    res.send("Hello secretdata");
-})
+// app.post("/user", (req, res)=>{
+//     res.send("data stored in db successfully");
+// })
+// app.delete("/user", (req, res)=>{
+//     res.send("Hello Deleted successfully");
+// })
 
-app.use("/", (req, res)=>{
-    res.send("Hello World ffa");
-})
+// app.use("/", (req, res)=>{
+//     res.send("Hello World ffa");
+// })
 
 
 app.listen(7777, ()=>{
