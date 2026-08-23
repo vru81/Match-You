@@ -43,7 +43,12 @@ const userSchema = new mongoose.Schema({
         maxlength: 300,
     },
     skills: {
-        tyepe: [String],
+        type: [String],
+        validate(value){
+            if(value.length > 20){
+                throw new Error("Skills cannot exceed more than 20");
+            }
+        }
     }
 
 },{
