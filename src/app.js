@@ -1,33 +1,32 @@
 const express = require('express');
-
+const connectDB = require('./config/database');
 const app = express();
+const User = require('./models/user');
 
-const { adminAuth,userAuth } = require("./middlewares/auth");
+app.use(express.json());
 
+app.post("/signup", async (req, res)=>{
+    // console.log(req.body);
+    const user = new User(req.body);
 
-
-app.use("/admin", adminAuth);
-
-app.get("/user", userAuth, (req, res) =>{
-    res.send("User data send succesfully");
-});
-app.get("/user/getAllData", userAuth, (req, res) =>{
-    res.send("User data send succesfully");
-});
-app.get("/user/deleteData", userAuth, (req, res) =>{
-    res.send("All Data deleted succesfully");
-});
-app.get("/admin/getAllData", (req, res)=>{
-    res.send("All Data Send succesfully");
-});
-app.get("/admin/deleteData", (req, res)=>{
-    res.send("All Data deleted succesfully");
-});
-
-app.use("/", (err,req, res,next)=>{
-    res.status(404).send("Route not found");
+    try{
+        await user.save();
+        res.send("User created successfully");
+    }
+    catch(err){
+        console.error(err);
+        res.status(400).send("user error"+ err.message);
+    }
 })
 
-app.listen(7777, ()=>{
-    console.log('Server is running on port 7777');
-});
+connectDB()
+    .then(()=>{
+        console.log("Database connected successfully");
+        app.listen(7777, () => {
+            console.log('Server is running on port 7777');
+        });
+    })
+    .catch((err) => {
+        console.error("Database connection failed:", err);
+    });
+
