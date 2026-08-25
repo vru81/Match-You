@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const { JWT_SECRET } = require("../utils/constants");
 
 const adminAuth = (req, res, next) => {
   const token = "abcsadsasad";
@@ -17,7 +18,7 @@ const userAuth = async (req, res, next) => {
       throw new Error("Token is not valid");
     }
 
-    const decodedMessage = jwt.verify(token, "MatchYou");
+    const decodedMessage = jwt.verify(token, JWT_SECRET);
     const { _id } = decodedMessage;
 
     const user = await User.findById(_id);
