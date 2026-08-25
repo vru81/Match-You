@@ -5,8 +5,10 @@ const cookieParser = require("cookie-parser");
 const authRouter = require('./routes/auth');
 const profileRouter = require('./routes/profile');
 const requestRouter = require('./routes/request');
+const userRouter = require('./routes/user');
 
 const app = express();
+app.disable('x-powered-by');
 
 app.use(express.json()); //json to js obj
 app.use(cookieParser()); // to parse cookies from server to clinet back and forth
@@ -14,6 +16,7 @@ app.use(cookieParser()); // to parse cookies from server to clinet back and fort
 app.use('/', authRouter);
 app.use('/', profileRouter);
 app.use('/', requestRouter);
+app.use('/', userRouter);
 
 connectDB()
     .then(()=>{
