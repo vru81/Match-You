@@ -24,11 +24,14 @@ app.use('/', profileRouter);
 app.use('/', requestRouter);
 app.use('/', userRouter);
 
+const PORT = process.env.PORT || 7777;
+
 connectDB()
-    .then(()=>{
+    .then(() => {
         console.log("Database connected successfully");
-        app.listen(7777, () => {
-            console.log('Server is running on port 7777');
+
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
         });
     })
     .catch((err) => {
