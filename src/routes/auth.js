@@ -49,7 +49,11 @@ authRouter.post("/login", async (req, res) => {
         }
 
         const token = await user.getJWT();
-        res.cookie("token", token);
+        res.cookie("token", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
+});
         res.send("Login successful");
     } catch (err) {
         console.error(err);
@@ -58,7 +62,11 @@ authRouter.post("/login", async (req, res) => {
 });
 
 authRouter.post("/logout", (req, res) => {
-    res.clearCookie("token");
+    res.clearCookie("token", {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
+});
     res.send("Logout successful");
 });
 

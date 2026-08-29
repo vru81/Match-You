@@ -11,10 +11,15 @@ const userRouter = require('./routes/user');
 const app = express();
 app.disable('x-powered-by');
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://match-you-frontend.vercel.app"
+];
+
 app.use(cors({
-    origin: "http://localhost:5173",
-    credentials: true
-}));
+  origin: allowedOrigins,
+  credentials: true
+}))
 
 app.use(express.json()); //json to js obj
 app.use(cookieParser()); // to parse cookies from server to clinet back and forth
